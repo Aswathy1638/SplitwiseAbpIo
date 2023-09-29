@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SplitwiseAbp.BalDetails;
 using SplitwiseAbp.FriendShips;
 using SplitwiseAbp.Groups;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -59,6 +60,8 @@ public class SplitwiseAbpDbContext :
 
     public DbSet<UserGroup> UserGroups { get; set; }
     public DbSet<Friends>  friends { get; set; }
+
+    public DbSet<BalDetail> balDetails { get; set; }
     public SplitwiseAbpDbContext(DbContextOptions<SplitwiseAbpDbContext> options)
         : base(options)
     {
@@ -103,6 +106,13 @@ public class SplitwiseAbpDbContext :
             b.ToTable(SplitwiseAbpConsts.DbTablePrefix + "Friends", SplitwiseAbpConsts.DbSchema);
             b.ConfigureByConvention();
          
+        });
+
+        builder.Entity<BalDetail>(b => {
+            b.ToTable(SplitwiseAbpConsts.DbTablePrefix + "BalanceTable", SplitwiseAbpConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.HasOne(p => p.user).WithMany().HasForeignKey(p => p.userId);
+
         });
     }
 }

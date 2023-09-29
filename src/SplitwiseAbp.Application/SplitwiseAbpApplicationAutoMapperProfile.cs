@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SplitwiseAbp.BalDetails;
 using SplitwiseAbp.Friend;
 using SplitwiseAbp.FriendShips;
 using SplitwiseAbp.Groups;
@@ -18,5 +19,8 @@ public class SplitwiseAbpApplicationAutoMapperProfile : Profile
 
         CreateMap<Friends,FriendsDto>();
         CreateMap<CreateUodateFriendsDto, Friends>();
+
+        CreateMap<BalDetail,BalDetailDto>();
+        CreateMap<CreateUpdateBalDetail, BalDetail>();
     }
 }

@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SplitwiseAbp.Domain\SplitwiseAbp.Domain.csproj" />
     <ProjectReference Include="..\SplitwiseAbp.Application.Contracts\SplitwiseAbp.Application.Contracts.csproj" />
+    <ProjectReference Include="..\SplitwiseAbp.EntityFrameworkCore\SplitwiseAbp.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>

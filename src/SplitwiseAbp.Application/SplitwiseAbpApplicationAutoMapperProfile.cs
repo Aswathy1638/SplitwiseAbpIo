@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using SplitwiseAbp.Friend;
+using SplitwiseAbp.FriendShips;
 using SplitwiseAbp.Groups;
 using System.Text.RegularExpressions;
 
@@ -13,5 +15,8 @@ public class SplitwiseAbpApplicationAutoMapperProfile : Profile
 
         CreateMap<UserGroup, UserGroupDto>();
         CreateMap<CreateUpdateUserGroupDto,UserGroup>();
+
+        CreateMap<Friends,FriendsDto>();
+        CreateMap<CreateUodateFriendsDto, Friends>();
     }
 }

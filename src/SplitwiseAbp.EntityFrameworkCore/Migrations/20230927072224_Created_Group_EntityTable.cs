@@ -9,22 +9,22 @@ namespace SplitwiseAbp.Migrations
     public partial class CreatedGroupEntityTable : Migration
     {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "CreatedDate",
-                table: "AppGroups");
-        }
+        protected override void Up(MigrationBuilder migrationBuilder) { }
+        //{
+        //    migrationBuilder.DropColumn(
+        //        name: "CreatedDate",
+        //        table: "AppGroups");
+        //}
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<DateTime>(
-                name: "CreatedDate",
-                table: "AppGroups",
-                type: "datetime2",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+            //migrationBuilder.AddColumn<DateTime>(
+            //    name: "CreatedDate",
+            //    table: "AppGroups",
+            //    type: "datetime2",
+            //    nullable: false,
+            //    defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
         }
     }
 }

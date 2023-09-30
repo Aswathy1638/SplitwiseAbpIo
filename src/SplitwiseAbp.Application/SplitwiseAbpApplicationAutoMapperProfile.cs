@@ -5,8 +5,10 @@ using SplitwiseAbp.Friend;
 using SplitwiseAbp.FriendShips;
 using SplitwiseAbp.Groups;
 using SplitwiseAbp.Participants;
-
+using SplitwiseAbp.Transactions;
 using System.Text.RegularExpressions;
+using System.Transactions;
+
 
 namespace SplitwiseAbp;
 
@@ -31,5 +33,8 @@ public class SplitwiseAbpApplicationAutoMapperProfile : Profile
 
         CreateMap<Expense,ExpenseDto>();
         CreateMap<CreateUpdateExpenseDto,Expense>();
+
+        CreateMap<Transactions.Transaction, TransactionDto>();
+        CreateMap<CreateUpdateTransactionDto, Transactions.Transaction>();
     }
 }

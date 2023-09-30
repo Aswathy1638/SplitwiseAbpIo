@@ -5,6 +5,7 @@ using SplitwiseAbp.FriendShips;
 using SplitwiseAbp.Groups;
 using SplitwiseAbp.Participants;
 using System.Reflection.Emit;
+using SplitwiseAbp.Transactions;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -69,6 +70,7 @@ public class SplitwiseAbpDbContext :
     public DbSet<Participant> Participants { get; set; }
 
     public DbSet<Expense> Expenses { get; set; }
+    public DbSet<Transaction> Transactions { get; set; }
     public SplitwiseAbpDbContext(DbContextOptions<SplitwiseAbpDbContext> options)
         : base(options)
     {
@@ -138,6 +140,18 @@ public class SplitwiseAbpDbContext :
             b.ConfigureByConvention();
             b.HasOne(e => e.Group).WithMany().HasForeignKey(e => e.GroupId);
         });
+        builder.Entity<Transaction>(b =>
+        {
+            b.ToTable(SplitwiseAbpConsts.DbTablePrefix + "Transactions" , SplitwiseAbpConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.HasOne(e => e.Expense)
+            .WithMany()
+            .HasForeignKey(e => e.expenseId);
+
+        });
+
+      
+
     }
-        
-    }
+
+}

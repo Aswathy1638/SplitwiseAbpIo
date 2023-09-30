@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SplitwiseAbp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace SplitwiseAbp.Migrations
 {
     [DbContext(typeof(SplitwiseAbpDbContext))]
-    partial class SplitwiseAbpDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230930054218_Create_Participants")]
+    partial class CreateParticipants
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,63 +72,6 @@ namespace SplitwiseAbp.Migrations
                     b.HasIndex("userId");
 
                     b.ToTable("AppBalanceTable", (string)null);
-                });
-
-            modelBuilder.Entity("SplitwiseAbp.Expenses.Expense", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasColumnName("ConcurrencyStamp");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ExtraProperties")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ExtraProperties");
-
-                    b.Property<Guid>("GroupId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("paiduser_id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("shareAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GroupId");
-
-                    b.ToTable("AppExpenses", (string)null);
                 });
 
             modelBuilder.Entity("SplitwiseAbp.FriendShips.Friends", b =>
@@ -1029,9 +975,6 @@ namespace SplitwiseAbp.Migrations
                     b.Property<int>("EntityVersion")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("ExpenseId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ExtraProperties")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
@@ -1138,8 +1081,6 @@ namespace SplitwiseAbp.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Email");
-
-                    b.HasIndex("ExpenseId");
 
                     b.HasIndex("NormalizedEmail");
 
@@ -1986,17 +1927,6 @@ namespace SplitwiseAbp.Migrations
                     b.Navigation("user");
                 });
 
-            modelBuilder.Entity("SplitwiseAbp.Expenses.Expense", b =>
-                {
-                    b.HasOne("SplitwiseAbp.Groups.Group", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Group");
-                });
-
             modelBuilder.Entity("SplitwiseAbp.Groups.UserGroup", b =>
                 {
                     b.HasOne("SplitwiseAbp.Groups.Group", "Group")
@@ -2050,13 +1980,6 @@ namespace SplitwiseAbp.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Volo.Abp.Identity.IdentityUser", b =>
-                {
-                    b.HasOne("SplitwiseAbp.Expenses.Expense", null)
-                        .WithMany("Participants")
-                        .HasForeignKey("ExpenseId");
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentityUserClaim", b =>
@@ -2163,11 +2086,6 @@ namespace SplitwiseAbp.Migrations
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SplitwiseAbp.Expenses.Expense", b =>
-                {
-                    b.Navigation("Participants");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

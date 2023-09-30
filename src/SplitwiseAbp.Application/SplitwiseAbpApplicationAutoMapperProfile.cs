@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using SplitwiseAbp.BalDetails;
+using SplitwiseAbp.Expenses;
 using SplitwiseAbp.Friend;
 using SplitwiseAbp.FriendShips;
 using SplitwiseAbp.Groups;
+using SplitwiseAbp.Participants;
+
 using System.Text.RegularExpressions;
 
 namespace SplitwiseAbp;
@@ -22,5 +25,11 @@ public class SplitwiseAbpApplicationAutoMapperProfile : Profile
 
         CreateMap<BalDetail,BalDetailDto>();
         CreateMap<CreateUpdateBalDetail, BalDetail>();
+
+        CreateMap<Participant, ParticipantDto>();
+        CreateMap<CreateUpdateParticipantDto, Participant>();
+
+        CreateMap<Expense,ExpenseDto>();
+        CreateMap<CreateUpdateExpenseDto,Expense>();
     }
 }

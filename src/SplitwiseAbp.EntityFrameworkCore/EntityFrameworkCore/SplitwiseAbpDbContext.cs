@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SplitwiseAbp.BalDetails;
+using SplitwiseAbp.Expenses;
 using SplitwiseAbp.FriendShips;
 using SplitwiseAbp.Groups;
+using SplitwiseAbp.Participants;
+using System.Reflection.Emit;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -62,6 +65,10 @@ public class SplitwiseAbpDbContext :
     public DbSet<Friends>  friends { get; set; }
 
     public DbSet<BalDetail> balDetails { get; set; }
+
+    public DbSet<Participant> Participants { get; set; }
+
+    public DbSet<Expense> Expenses { get; set; }
     public SplitwiseAbpDbContext(DbContextOptions<SplitwiseAbpDbContext> options)
         : base(options)
     {
@@ -85,7 +92,7 @@ public class SplitwiseAbpDbContext :
 
         /* Configure your own tables/entities inside here */
 
-        builder.Entity<Group    >(b =>
+        builder.Entity<Group>(b =>
         {
             b.ToTable(SplitwiseAbpConsts.DbTablePrefix + "Groups", SplitwiseAbpConsts.DbSchema);
             b.ConfigureByConvention();
@@ -94,7 +101,8 @@ public class SplitwiseAbpDbContext :
             //...
         });
 
-        builder.Entity<UserGroup>(b => {
+        builder.Entity<UserGroup>(b =>
+        {
             b.ToTable(SplitwiseAbpConsts.DbTablePrefix + "UserGroup", SplitwiseAbpConsts.DbSchema);
             b.ConfigureByConvention();
             b.HasOne(e => e.User)
@@ -102,17 +110,34 @@ public class SplitwiseAbpDbContext :
             .HasForeignKey(e => e.UserId);
         });
 
-        builder.Entity<Friends>(b => {
+        builder.Entity<Friends>(b =>
+        {
             b.ToTable(SplitwiseAbpConsts.DbTablePrefix + "Friends", SplitwiseAbpConsts.DbSchema);
             b.ConfigureByConvention();
-         
+
         });
 
-        builder.Entity<BalDetail>(b => {
+        builder.Entity<BalDetail>(b =>
+        {
             b.ToTable(SplitwiseAbpConsts.DbTablePrefix + "BalanceTable", SplitwiseAbpConsts.DbSchema);
             b.ConfigureByConvention();
             b.HasOne(p => p.user).WithMany().HasForeignKey(p => p.userId);
 
         });
+
+        builder.Entity<Participant>(b =>
+        {
+            b.ToTable(SplitwiseAbpConsts.DbTablePrefix + "Participants", SplitwiseAbpConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.HasKey(p => p.Id);
+        });
+
+        builder.Entity<Expense>(b =>
+        {
+            b.ToTable(SplitwiseAbpConsts.DbTablePrefix + "Expenses", SplitwiseAbpConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.HasOne(e => e.Group).WithMany().HasForeignKey(e => e.GroupId);
+        });
     }
-}
+        
+    }

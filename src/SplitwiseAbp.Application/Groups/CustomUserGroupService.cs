@@ -36,7 +36,7 @@ namespace SplitwiseAbp.Groups
             return new ListResultDto<UserGroupDto>(groupUsers);
         }
 
-        public async Task<ListResultDto<UserGroupDto>> GetAllGroupsAsync(string userId)
+        public async Task<ListResultDto<GroupOutputDto>> GetAllGroupsAsync(string userId)
         {
             var userGroups = await _splitwiseAbpContext.UserGroups.Where(u => u.UserId.ToString() == userId).Select
                 (g => new UserGroupDto
@@ -44,8 +44,19 @@ namespace SplitwiseAbp.Groups
                     GroupId = g.GroupId,
                     UserId = g.UserId,
                 }).ToListAsync();
-
-            return new ListResultDto<UserGroupDto>(userGroups);
+            var result = new List<GroupOutputDto>();
+            foreach (var group in userGroups)
+            {
+                var groupInfo = await _splitwiseAbpContext.Groups.Where(u => u.Id == group.GroupId).Select
+                    (p => new GroupOutputDto
+                    {
+                        Name =p.Name,
+                        Description =p.Description,
+                        CreationTime =p.CreationTime,
+                    }).ToListAsync();
+                result.AddRange(groupInfo);
+            }
+            return new ListResultDto<GroupOutputDto>(result);
         }
     }
 }
